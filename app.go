@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx   context.Context
+	todos []string
 }
 
 // NewApp creates a new App application struct
@@ -22,6 +22,13 @@ func (a *App) startup(ctx context.Context) {
 }
 
 // Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+func (a *App) AddTodo(todo string) {
+	if todo == "" {
+		return
+	}
+	a.todos = append(a.todos, todo)
+}
+
+func (a *App) GetTodos() []string {
+	return a.todos
 }
