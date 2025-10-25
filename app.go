@@ -22,6 +22,7 @@ func (a *App) startup(ctx context.Context) {
 }
 
 // Greet returns a greeting for the given name
+
 func (a *App) AddTodo(todo string) {
 	if todo == "" {
 		return
@@ -31,4 +32,11 @@ func (a *App) AddTodo(todo string) {
 
 func (a *App) GetTodos() []string {
 	return a.todos
+}
+
+func (a *App) RemoveTodo(index int) {
+	if index < 0 || index >= len(a.todos) {
+		return
+	}
+	a.todos = append(a.todos[:index], a.todos[index+1:]...)
 }

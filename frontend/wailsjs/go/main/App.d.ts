@@ -4,3 +4,5 @@
 export function AddTodo(arg1:string):Promise<void>;
 
 export function GetTodos():Promise<Array<string>>;
+
+export function RemoveTodo(arg1:number):Promise<void>;

@@ -9,3 +9,7 @@ export function AddTodo(arg1) {
 export function GetTodos() {
   return window['go']['main']['App']['GetTodos']();
 }
+
+export function RemoveTodo(arg1) {
+  return window['go']['main']['App']['RemoveTodo'](arg1);
+}

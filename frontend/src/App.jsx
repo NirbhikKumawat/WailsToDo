@@ -1,18 +1,30 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import './App.css';
+import {AddTodo,GetTodos,RemoveTodo} from "../wailsjs/go/main/App.js";
 
 function App() {
     const [todos,setTodos] = useState([]);
     const [input,setInput] = useState("")
 
-    const addTodo = () =>{
+
+    useEffect(()=>{
+        refreshTodos();
+    },[])
+
+    const refreshTodos = async () => {
+        const result = await GetTodos();
+        setTodos(result||[])
+    }
+    const addTodo = async () =>{
         if(input.trim()==="")return;
-        setTodos([...todos,input.trim()])
+        await AddTodo(input.trim());
         setInput("")
+        await refreshTodos()
     }
 
-    const removeTodo = (index)=>{
-        setTodos(todos.filter((_,i)=>i !==index));
+    const removeTodo = async (index)=>{
+        await RemoveTodo(index)
+        await refreshTodos()
     };
 
     return(
