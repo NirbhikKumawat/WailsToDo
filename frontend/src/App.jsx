@@ -1,26 +1,36 @@
 import {useState} from 'react';
-import logo from './assets/images/logo-universal.png';
 import './App.css';
-import {Greet} from "../wailsjs/go/main/App";
 
 function App() {
-    const [resultText, setResultText] = useState("Please enter your name below 👇");
-    const [name, setName] = useState('');
-    const updateName = (e) => setName(e.target.value);
-    const updateResultText = (result) => setResultText(result);
+    const [todos,setTodos] = useState([]);
+    const [input,setInput] = useState("")
 
-    function greet() {
-        Greet(name).then(updateResultText);
+    const addTodo = () =>{
+        if(input.trim()==="")return;
+        setTodos([...todos,input.trim()])
+        setInput("")
     }
 
-    return (
-        <div id="App">
-            <img src={logo} id="logo" alt="logo"/>
-            <div id="result" className="result">{resultText}</div>
-            <div id="input" className="input-box">
-                <input id="name" className="input" onChange={updateName} autoComplete="off" name="input" type="text"/>
-                <button className="btn" onClick={greet}>Greet</button>
+    const removeTodo = (index)=>{
+        setTodos(todos.filter((_,i)=>i !==index));
+    };
+
+    return(
+        <div className="app">
+            <h1>My To-Do List</h1>
+            <div className="input-area">
+                <input type="text" placeholder="Add a new task" value={input} onChange={(e)=>setInput(e.target.value)}/>
+                <button onClick={addTodo}>Add</button>
             </div>
+
+            <ul>
+                {todos.map((todo,i)=>(
+                    <li key={i}>
+                        {todo}
+                        <button onClick={()=> removeTodo(i)}>❌</button>
+                    </li>
+                ))}
+            </ul>
         </div>
     )
 }
